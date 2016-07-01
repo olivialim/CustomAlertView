@@ -30,11 +30,12 @@ final class CustomAlertViewController: UIViewController {
         view.textColor = .blackColor()
         view.textAlignment = .Center
         view.numberOfLines = 0
-        view.text = NSLocalizedString("Title Label", comment: "Title")
+        view.text = NSLocalizedString("Failed to Add Gift Card", comment: "Title")
         view.backgroundColor = .yellowColor()
         return view
     }()
     
+    //One Button
     private let aButton: UIButton = {
         let view = UIButton()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -42,7 +43,55 @@ final class CustomAlertViewController: UIViewController {
         view.setTitle(title, forState: .Normal)
         view.titleLabel?.font = UIFont.systemFontOfSize(15)
         view.backgroundColor = .purpleColor()
-        view.frame.size.height = Constants.ButtonHeight
+        return view
+    }()
+    
+    //Two Buttons
+    private let leftButton: UIButton = {
+        let view = UIButton()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        let title = NSLocalizedString("Left Button", comment: "Button title")
+        view.setTitle(title, forState: .Normal)
+        view.titleLabel?.font = UIFont.systemFontOfSize(15)
+        view.backgroundColor = .greenColor()
+        return view
+    }()
+    private let rightButton: UIButton = {
+        let view = UIButton()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        let title = NSLocalizedString("Right Button", comment: "Button title")
+        view.setTitle(title, forState: .Normal)
+        view.titleLabel?.font = UIFont.systemFontOfSize(15)
+        view.backgroundColor = .blueColor()
+        return view
+    }()
+    
+    //Three or More Buttons
+    private let firstButton: UIButton = {
+        let view = UIButton()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        let title = NSLocalizedString("First Button", comment: "Button title")
+        view.setTitle(title, forState: .Normal)
+        view.titleLabel?.font = UIFont.systemFontOfSize(15)
+        view.backgroundColor = .blackColor()
+        return view
+    }()
+    private let secondButton: UIButton = {
+        let view = UIButton()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        let title = NSLocalizedString("Second Button", comment: "Button title")
+        view.setTitle(title, forState: .Normal)
+        view.titleLabel?.font = UIFont.systemFontOfSize(15)
+        view.backgroundColor = .redColor()
+        return view
+    }()
+    private let thirdButton: UIButton = {
+        let view = UIButton()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        let title = NSLocalizedString("Third Button", comment: "Button title")
+        view.setTitle(title, forState: .Normal)
+        view.titleLabel?.font = UIFont.systemFontOfSize(15)
+        view.backgroundColor = .orangeColor()
         return view
     }()
     
@@ -96,23 +145,15 @@ extension CustomAlertViewController {
         layoutContentView(view)
     }
     
-    private func layoutContentView(view: SizeableLabel) {
-        let contentViewSize = view.calculateHeight(contentWidth)
-        view.backgroundColor = .magentaColor()
-        view.translatesAutoresizingMaskIntoConstraints = false
+    private func layoutContentView(contentView: SizeableLabel) {
         
-        containerView.addSubview(view)
+        contentView.backgroundColor = .magentaColor()
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        
+        containerView.addSubview(contentView)
+        
         self.view.addConstraint(NSLayoutConstraint(
-            item: view,
-            attribute: .Top,
-            relatedBy: .Equal,
-            toItem: titleLabel,
-            attribute: .Bottom,
-            multiplier: 1.0,
-            constant: Constants.EdgeMargin)
-        )
-        self.view.addConstraint(NSLayoutConstraint(
-            item: view,
+            item: contentView,
             attribute: .Width,
             relatedBy: .Equal,
             toItem: nil,
@@ -121,7 +162,7 @@ extension CustomAlertViewController {
             constant: contentWidth)
         )
         self.view.addConstraint(NSLayoutConstraint(
-            item: view,
+            item: contentView,
             attribute: .CenterX,
             relatedBy: .Equal,
             toItem: containerView,
@@ -131,7 +172,7 @@ extension CustomAlertViewController {
         )
         
         self.view.addConstraint(NSLayoutConstraint(
-            item: view,
+            item: contentView,
             attribute: .Top,
             relatedBy: .Equal,
             toItem: titleLabel,
@@ -140,19 +181,11 @@ extension CustomAlertViewController {
             constant: Constants.Spacing)
         )
         
-        self.view.addConstraint(NSLayoutConstraint(
-            item: view,
-            attribute: .Bottom,
-            relatedBy: .Equal,
-            toItem: aButton,
-            attribute: .Top,
-            multiplier: 1.0,
-            constant: -Constants.Spacing)
-        )
         
+        let contentViewSize = contentView.calculateHeight(contentWidth)
         let titleLabelSize = titleLabel.calculateHeight(contentWidth)
         
-        containerViewHeightConstraint?.constant =  contentViewSize.height + Constants.EdgeMargin * 2 + titleLabelSize.height + Constants.ButtonHeight + 10;
+        containerViewHeightConstraint?.constant = contentViewSize.height + Constants.EdgeMargin * 1 + Constants.Spacing * 2 + titleLabelSize.height + Constants.ButtonHeight * 3//+ Constants.Spacing * 2 + titleLabelSize.height + Constants.ButtonHeight * 3;
     }
 }
 
@@ -165,7 +198,17 @@ extension CustomAlertViewController {
 extension CustomAlertViewController {
     
     private func layout() {
-        containerView.backgroundColor = .orangeColor()
+
+        addContainerView()
+        addTitleLabel()
+        
+//        addOneButton()
+//        addTwoButtons()
+        addThreeButtons()
+    }
+    
+    private func addContainerView () {
+        containerView.backgroundColor = .lightGrayColor()
         
         view.addSubview(containerView)
         view.addConstraint(NSLayoutConstraint(
@@ -211,11 +254,9 @@ extension CustomAlertViewController {
             multiplier: 1.0,
             constant: 0)
         )
-        
-        
-        
-        
-        
+    }
+    
+    private func addTitleLabel () {
         containerView.addSubview(titleLabel)
         
         view.addConstraint(NSLayoutConstraint(
@@ -247,10 +288,9 @@ extension CustomAlertViewController {
             multiplier: 1.0,
             constant: contentWidth)
         )
-        
-        
-        
-        
+    }
+    
+    private func addOneButton () {
         
         containerView.addSubview(aButton)
         
@@ -271,7 +311,7 @@ extension CustomAlertViewController {
             toItem: containerView,
             attribute: .Bottom,
             multiplier: 1.0,
-            constant: -Constants.EdgeMargin)
+            constant: 0)
         )
         
         view.addConstraint(NSLayoutConstraint(
@@ -281,7 +321,236 @@ extension CustomAlertViewController {
             toItem: nil,
             attribute: .Width,
             multiplier: 1.0,
-            constant: contentWidth)
+            constant: Constants.ContainerWidth)
+        )
+        
+        view.addConstraint(NSLayoutConstraint(
+            item: aButton,
+            attribute: .Height,
+            relatedBy: .Equal,
+            toItem: nil,
+            attribute: .Height,
+            multiplier: 1.0,
+            constant: Constants.ButtonHeight)
+        )
+        
+    }
+    
+    private func addTwoButtons() {
+        containerView.addSubview(leftButton)
+        containerView.addSubview(rightButton)
+        
+        view.addConstraint(NSLayoutConstraint(
+            item: leftButton,
+            attribute: .Left,
+            relatedBy: .Equal,
+            toItem: containerView,
+            attribute: .Left,
+            multiplier: 1.0,
+            constant: 0)
+        )
+        
+        view.addConstraint(NSLayoutConstraint(
+            item: leftButton,
+            attribute: .Right,
+            relatedBy: .Equal,
+            toItem: rightButton,
+            attribute: .Left,
+            multiplier: 1.0,
+            constant: 0)
+        )
+        
+        view.addConstraint(NSLayoutConstraint(
+            item: rightButton,
+            attribute: .Right,
+            relatedBy: .Equal,
+            toItem: rightButton,
+            attribute: .Right,
+            multiplier: 1.0,
+            constant: 0)
+        )
+        
+        view.addConstraint(NSLayoutConstraint(
+            item: leftButton,
+            attribute: .Bottom,
+            relatedBy: .Equal,
+            toItem: containerView,
+            attribute: .Bottom,
+            multiplier: 1.0,
+            constant: 0)
+        )
+        
+        view.addConstraint(NSLayoutConstraint(
+            item: rightButton,
+            attribute: .Bottom,
+            relatedBy: .Equal,
+            toItem: containerView,
+            attribute: .Bottom,
+            multiplier: 1.0,
+            constant: 0)
+        )
+        
+        view.addConstraint(NSLayoutConstraint(
+            item: leftButton,
+            attribute: .Width,
+            relatedBy: .Equal,
+            toItem: nil,
+            attribute: .Width,
+            multiplier: 1.0,
+            constant: Constants.ContainerWidth/2)
+        )
+        
+        view.addConstraint(NSLayoutConstraint(
+            item: rightButton,
+            attribute: .Width,
+            relatedBy: .Equal,
+            toItem: nil,
+            attribute: .Width,
+            multiplier: 1.0,
+            constant: Constants.ContainerWidth/2)
+        )
+        
+        view.addConstraint(NSLayoutConstraint(
+            item: leftButton,
+            attribute: .Height,
+            relatedBy: .Equal,
+            toItem: nil,
+            attribute: .Height,
+            multiplier: 1.0,
+            constant: Constants.ButtonHeight)
+        )
+        
+        view.addConstraint(NSLayoutConstraint(
+            item: rightButton,
+            attribute: .Height,
+            relatedBy: .Equal,
+            toItem: nil,
+            attribute: .Height,
+            multiplier: 1.0,
+            constant: Constants.ButtonHeight)
+        )
+    }
+    
+    private func addThreeButtons() {
+        containerView.addSubview(firstButton)
+        containerView.addSubview(secondButton)
+        containerView.addSubview(thirdButton)
+        
+        view.addConstraint(NSLayoutConstraint(
+            item: firstButton,
+            attribute: .Width,
+            relatedBy: .Equal,
+            toItem: nil,
+            attribute: .Width,
+            multiplier: 1.0,
+            constant: Constants.ContainerWidth)
+        )
+        view.addConstraint(NSLayoutConstraint(
+            item: secondButton,
+            attribute: .Width,
+            relatedBy: .Equal,
+            toItem: nil,
+            attribute: .Width,
+            multiplier: 1.0,
+            constant: Constants.ContainerWidth)
+        )
+        view.addConstraint(NSLayoutConstraint(
+            item: thirdButton,
+            attribute: .Width,
+            relatedBy: .Equal,
+            toItem: nil,
+            attribute: .Width,
+            multiplier: 1.0,
+            constant: Constants.ContainerWidth)
+        )
+        
+        view.addConstraint(NSLayoutConstraint(
+            item: firstButton,
+            attribute: .CenterX,
+            relatedBy: .Equal,
+            toItem: containerView,
+            attribute: .CenterX,
+            multiplier: 1.0,
+            constant: 0)
+        )
+        view.addConstraint(NSLayoutConstraint(
+            item: secondButton,
+            attribute: .CenterX,
+            relatedBy: .Equal,
+            toItem: containerView,
+            attribute: .CenterX,
+            multiplier: 1.0,
+            constant: 0)
+        )
+        view.addConstraint(NSLayoutConstraint(
+            item: thirdButton,
+            attribute: .CenterX,
+            relatedBy: .Equal,
+            toItem: containerView,
+            attribute: .CenterX,
+            multiplier: 1.0,
+            constant: 0)
+        )
+        
+        
+        
+        view.addConstraint(NSLayoutConstraint(
+            item: firstButton,
+            attribute: .Bottom,
+            relatedBy: .Equal,
+            toItem: secondButton,
+            attribute: .Top,
+            multiplier: 1.0,
+            constant: 0)
+        )
+        view.addConstraint(NSLayoutConstraint(
+            item: secondButton,
+            attribute: .Bottom,
+            relatedBy: .Equal,
+            toItem: thirdButton,
+            attribute: .Top,
+            multiplier: 1.0,
+            constant: 0)
+        )
+        
+        view.addConstraint(NSLayoutConstraint(
+            item: thirdButton,
+            attribute: .Bottom,
+            relatedBy: .Equal,
+            toItem: containerView,
+            attribute: .Bottom,
+            multiplier: 1.0,
+            constant: 0)
+        )
+        
+        
+        
+        view.addConstraint(NSLayoutConstraint(
+            item: firstButton,
+            attribute: .Height,
+            relatedBy: .Equal,
+            toItem: nil,
+            attribute: .Height,
+            multiplier: 1.0,
+            constant: Constants.ButtonHeight)
+        )
+        view.addConstraint(NSLayoutConstraint(
+            item: secondButton,
+            attribute: .Height,
+            relatedBy: .Equal,
+            toItem: nil,
+            attribute: .Height,
+            multiplier: 1.0,
+            constant: Constants.ButtonHeight)
+        )
+        view.addConstraint(NSLayoutConstraint(
+            item: thirdButton,
+            attribute: .Height,
+            relatedBy: .Equal,
+            toItem: nil,
+            attribute: .Height,
+            multiplier: 1.0,
+            constant: Constants.ButtonHeight)
         )
         
     }

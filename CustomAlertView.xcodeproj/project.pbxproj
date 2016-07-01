@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		872171561D27023600F31050 /* AddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872171551D27023600F31050 /* AddButton.swift */; };
 		87A8EE6A1D231CB400F06312 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A8EE691D231CB400F06312 /* AppDelegate.swift */; };
 		87A8EE711D231CB400F06312 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87A8EE701D231CB400F06312 /* Assets.xcassets */; };
 		87A8EE741D231CB400F06312 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87A8EE721D231CB400F06312 /* LaunchScreen.storyboard */; };
@@ -28,6 +29,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		872171551D27023600F31050 /* AddButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddButton.swift; sourceTree = "<group>"; };
 		87A8EE661D231CB400F06312 /* CustomAlertView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CustomAlertView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87A8EE691D231CB400F06312 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		87A8EE701D231CB400F06312 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 				87A8EE691D231CB400F06312 /* AppDelegate.swift */,
 				87A8EE821D25796400F06312 /* Sizeable.swift */,
 				87A8EE7B1D231D1A00F06312 /* CustomAlertViewController.swift */,
+				872171551D27023600F31050 /* AddButton.swift */,
 				87A8EE701D231CB400F06312 /* Assets.xcassets */,
 				87A8EE721D231CB400F06312 /* LaunchScreen.storyboard */,
 				87A8EE751D231CB400F06312 /* Info.plist */,
@@ -151,6 +154,7 @@
 				87A8EE831D25796400F06312 /* Sizeable.swift in Sources */,
 				87A8EE6A1D231CB400F06312 /* AppDelegate.swift in Sources */,
 				87A8EE7C1D231D1A00F06312 /* CustomAlertViewController.swift in Sources */,
+				872171561D27023600F31050 /* AddButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
