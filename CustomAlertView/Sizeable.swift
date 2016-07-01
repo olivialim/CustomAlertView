@@ -16,16 +16,16 @@ protocol Sizeable {
 class SizeableLabel: UILabel, Sizeable {}
 
 extension SizeableLabel {
-
+    
     func calculateHeight(width: CGFloat) -> CGSize {
         guard let text = self.text else {
             return CGSize.zero
         }
         
         let size = text.boundingRectWithSize(CGSize(width: width, height: CGFloat.max),
-                                              options: [.UsesLineFragmentOrigin],
-                                              attributes: [NSFontAttributeName: self.font],
-                                              context: nil).size
+                                             options: [.UsesLineFragmentOrigin],
+                                             attributes: [NSFontAttributeName: self.font],
+                                             context: nil).size
         
         return size
     }
