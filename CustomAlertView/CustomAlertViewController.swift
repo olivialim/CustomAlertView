@@ -15,52 +15,38 @@ final class CustomAlertViewController: UIViewController {
         static let EdgeMargin: CGFloat = 30.0
     }
     
-    
     // view
     private let containerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor.redColor()
         return view
     }()
     
-    
     private let titleLabel: SizeableLabel = {
-    let view = SizeableLabel()
-    view.translatesAutoresizingMaskIntoConstraints = false
-    view.font = UIFont.systemFontOfSize(14)
-    view.textColor = .blackColor()
-    view.textAlignment = .Center
-    view.numberOfLines = 0
-    view.text = NSLocalizedString("Title Label", comment: "Button title")
+        let view = SizeableLabel()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.font = UIFont.systemFontOfSize(30)
+        view.textColor = .blackColor()
+        view.textAlignment = .Center
+        view.numberOfLines = 0
+        view.text = NSLocalizedString("Title Label", comment: "Title")
         view.backgroundColor = .yellowColor()
-    return view
-}()
+        return view
+    }()
+
+    //    private let aButton: UIButton = {
+    //    let view = UIButton()
+    //    view.translatesAutoresizingMaskIntoConstraints = false
+    //    let title = NSLocalizedString("First Button", comment: "Button title")
+    //    view.setTitle(title, forState: .Normal)
+    //    view.titleLabel?.font = UIFont.systemFontOfSize(14)
+    //    view.backgroundColor = .purpleColor()
+    //    return view
+    //}()
+    //
     
-//    private let messageLabel: UILabel = {
-//    let view = UILabel()
-//    view.translatesAutoresizingMaskIntoConstraints = false
-//    view.font = UIFont.systemFontOfSize(14)
-//    view.textColor = .greenColor()
-//    view.textAlignment = .Center
-//    view.numberOfLines = 0
-//    view.text = NSLocalizedString("Message Label", comment: "Button title")
-//        view.backgroundColor = .orangeColor()
-//    return view
-//}()
-//   
-//    private let aButton: UIButton = {
-//    let view = UIButton()
-//    view.translatesAutoresizingMaskIntoConstraints = false
-//    let title = NSLocalizedString("First Button", comment: "Button title")
-//    view.setTitle(title, forState: .Normal)
-//    view.titleLabel?.font = UIFont.systemFontOfSize(14)
-//    view.backgroundColor = .purpleColor()
-//    return view
-//}()
-//    
+    private var containerViewHeightConstraint: NSLayoutConstraint?
     
-    private var containerViewHeightContstraint: NSLayoutConstraint?
     private var layoutInitialized = false
     private var contentView: SizeableLabel? = nil
     private let contentTitle: String
@@ -96,8 +82,7 @@ final class CustomAlertViewController: UIViewController {
     }
 }
 
-
-// MARK: -
+// MARK: - Content View -
 extension CustomAlertViewController {
     
     func addContentView(view: SizeableLabel) {
@@ -110,19 +95,18 @@ extension CustomAlertViewController {
         layoutContentView(view)
     }
     
-    
     private func layoutContentView(view: SizeableLabel) {
-        let viewSize = view.calculateHeight(contentWidth)
+        let contentViewSize = view.calculateHeight(contentWidth)
         view.backgroundColor = .greenColor()
-        
         view.translatesAutoresizingMaskIntoConstraints = false
+        
         containerView.addSubview(view)
         self.view.addConstraint(NSLayoutConstraint(
             item: view,
             attribute: .Top,
             relatedBy: .Equal,
-            toItem: containerView,
-            attribute: .Top,
+            toItem: titleLabel,
+            attribute: .Bottom,
             multiplier: 1.0,
             constant: Constants.EdgeMargin)
         )
@@ -154,12 +138,21 @@ extension CustomAlertViewController {
             constant: -Constants.EdgeMargin)
         )
         
-        containerViewHeightContstraint?.constant = viewSize.height + Constants.EdgeMargin * 2 //UIScreen.mainScreen().bounds.height * 0.7
+        self.view.addConstraint(NSLayoutConstraint(
+            item: view,
+            attribute: .Top,
+            relatedBy: .Equal,
+            toItem: titleLabel,
+            attribute: .Bottom,
+            multiplier: 1.0,
+            constant: 10)
+        )
+        
+        let titleLabelSize = titleLabel.calculateHeight(contentWidth)
+        
+        containerViewHeightConstraint?.constant =  contentViewSize.height + Constants.EdgeMargin * 2 + titleLabelSize.height + 10//UIScreen.mainScreen().bounds.height * 0.7
     }
-    
-    
 }
-
 
 // MARK: - Layout -
 extension CustomAlertViewController {
@@ -178,7 +171,7 @@ extension CustomAlertViewController {
             constant: Constants.ContainerWidth)
         )
         
-        containerViewHeightContstraint = NSLayoutConstraint(
+        containerViewHeightConstraint = NSLayoutConstraint(
             item: containerView,
             attribute: .Height,
             relatedBy: .Equal,
@@ -187,7 +180,8 @@ extension CustomAlertViewController {
             multiplier: 1.0,
             constant: 0
         )
-        if let constraint = containerViewHeightContstraint {
+        
+        if let constraint = containerViewHeightConstraint {
             view.addConstraint(constraint)
         }
         
@@ -200,6 +194,7 @@ extension CustomAlertViewController {
             multiplier: 1.0,
             constant: 0)
         )
+        
         view.addConstraint(NSLayoutConstraint(
             item: containerView,
             attribute: .CenterY,
@@ -215,8 +210,6 @@ extension CustomAlertViewController {
         
         
         containerView.addSubview(titleLabel)
-        //containerView.addSubview(messageLabel)
-        //alertView.addSubview(aButton)
         
         view.addConstraint(NSLayoutConstraint(
             item: titleLabel,
@@ -225,110 +218,60 @@ extension CustomAlertViewController {
             toItem: containerView,
             attribute: .Top,
             multiplier: 1.0,
-            constant: 0)
+            constant: Constants.EdgeMargin)
         )
+        
         view.addConstraint(NSLayoutConstraint(
             item: titleLabel,
-            attribute: .Left,
+            attribute: .CenterX,
             relatedBy: .Equal,
             toItem: containerView,
-            attribute: .Left,
-            multiplier: 1.0,
-            constant: 0)
-        )
-        view.addConstraint(NSLayoutConstraint(
-            item: titleLabel,
-            attribute: .Right,
-            relatedBy: .Equal,
-            toItem: containerView,
-            attribute: .Right,
+            attribute: .CenterX,
             multiplier: 1.0,
             constant: 0)
         )
         
+        view.addConstraint(NSLayoutConstraint(
+            item: titleLabel,
+            attribute: .Width,
+            relatedBy: .Equal,
+            toItem: nil,
+            attribute: .Width,
+            multiplier: 1.0,
+            constant: contentWidth)
+        )
         
+        //        view.addConstraint(NSLayoutConstraint(
+        //            item: aButton,
+        //            attribute: .Left,
+        //            relatedBy: .Equal,
+        //            toItem: alertView,
+        //            attribute: .Left,
+        //            multiplier: 1.0,
+        //            constant: 0)
+        //        )
+        //        view.addConstraint(NSLayoutConstraint(
+        //            item: aButton,
+        //            attribute: .Right,
+        //            relatedBy: .Equal,
+        //            toItem: alertView,
+        //            attribute: .Right,
+        //            multiplier: 1.0,
+        //            constant: 0)
+        //        )
+        //        view.addConstraint(NSLayoutConstraint(
+        //            item: aButton,
+        //            attribute: .Bottom,
+        //            relatedBy: .Equal,
+        //            toItem: alertView,
+        //            attribute: .Bottom,
+        //            multiplier: 1.0,
+        //            constant: 0)
+        //        )
+        //        aButton.setContentHuggingPriority(1000, forAxis: .Vertical)
         
-//        view.addConstraint(NSLayoutConstraint(
-//            item: messageLabel,
-//            attribute: .Left,
-//            relatedBy: .Equal,
-//            toItem: containerView,
-//            attribute: .Left,
-//            multiplier: 1.0,
-//            constant: 0)
-//        )
-//        view.addConstraint(NSLayoutConstraint(
-//            item: messageLabel,
-//            attribute: .Right,
-//            relatedBy: .Equal,
-//            toItem: containerView,
-//            attribute: .Right,
-//            multiplier: 1.0,
-//            constant: 0)
-//        )
-//        view.addConstraint(NSLayoutConstraint(
-//            item: messageLabel,
-//            attribute: .Top,
-//            relatedBy: .Equal,
-//            toItem: containerView,
-//            attribute: .Top,
-//            multiplier: 1.0,
-//            constant: 0)
-//        )
-//        view.addConstraint(NSLayoutConstraint(
-//            item: messageLabel,
-//            attribute: .Bottom,
-//            relatedBy: .Equal,
-//            toItem: containerView,
-//            attribute: .Bottom,
-//            multiplier: 1.0,
-//            constant: 0)
-//        )
-        
-//        view.addConstraint(NSLayoutConstraint(
-//            item: messageLabel,
-//            attribute: .Bottom,
-//            relatedBy: .Equal,
-//            toItem: aButton,
-//            attribute: .Top,
-//            multiplier: 1.0,
-//            constant: 0)
-//        )
-        
-        
-        
-//        view.addConstraint(NSLayoutConstraint(
-//            item: aButton,
-//            attribute: .Left,
-//            relatedBy: .Equal,
-//            toItem: alertView,
-//            attribute: .Left,
-//            multiplier: 1.0,
-//            constant: 0)
-//        )
-//        view.addConstraint(NSLayoutConstraint(
-//            item: aButton,
-//            attribute: .Right,
-//            relatedBy: .Equal,
-//            toItem: alertView,
-//            attribute: .Right,
-//            multiplier: 1.0,
-//            constant: 0)
-//        )
-//        view.addConstraint(NSLayoutConstraint(
-//            item: aButton,
-//            attribute: .Bottom,
-//            relatedBy: .Equal,
-//            toItem: alertView,
-//            attribute: .Bottom,
-//            multiplier: 1.0,
-//            constant: 0)
-//        )
-//        aButton.setContentHuggingPriority(1000, forAxis: .Vertical)
-    
     }
 }
-
 
 // MARK: - Wire -
 extension CustomAlertViewController {

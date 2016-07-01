@@ -44,7 +44,7 @@ extension AppDelegate {
         let controller = CustomAlertViewController(title: "Error")
         
         let label = SizeableLabel()
-        label.text = "BL AHBLA HBLAHBL AHBLAHBL AHBLAHBLAHBL AHBLAHBLAH BLAHBLAHBLAHB LAH"
+        label.text = "Make a symbolic breakpoint at UIViewAlertForUnsatisfiableConstraints to catch this in the debugger.The methods in the UIConstraintBasedLayoutDebugging category on UIView listed in <UIKit/UIView.h> may also be helpful in many ways and more things. Make a symbolic breakpoint at UIViewAlertForUnsatisfiableConstraints to catch this in the debugger.The methods in the UIConstraintBasedLayoutDebugging category on UIView listed in <UIKit/UIView.h> may also be helpful in many ways and more things."
         label.numberOfLines = 0
         label.lineBreakMode = .ByWordWrapping
         
